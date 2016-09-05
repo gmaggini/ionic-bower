@@ -10015,10 +10015,12 @@ function($timeout, $controller, $ionicBind, $ionicConfig) {
         }
 
         function onScrollComplete() {
-          $scope.$onScrollComplete({
-            scrollTop: scrollCtrl.scrollView.__scrollTop,
-            scrollLeft: scrollCtrl.scrollView.__scrollLeft
-          });
+          if(isDefined(scrollCtrl) && isDefined(scrollCtrl.scrollView)){
+            $scope.$onScrollComplete({
+              scrollTop: scrollCtrl.scrollView.__scrollTop,
+              scrollLeft: scrollCtrl.scrollView.__scrollLeft
+            });
+          }
         }
 
       }
@@ -12844,7 +12846,9 @@ function($timeout, $ionicGesture, $window) {
 
             // freeze our scroll container if we have one
             var scrollScope = content.scope();
-            scrollScope.scrollCtrl && scrollScope.scrollCtrl.freezeScrollShut(!canScroll);
+            if(isDefined(scrollScope) && isDefined(scrollScope.scrollCtrl) && isDefined(scrollScope.scrollCtrl.freezeScrollShut)){
+              scrollScope.scrollCtrl && scrollScope.scrollCtrl.freezeScrollShut(!canScroll);
+            }
           },
           getTranslateX: function() {
             return $scope.sideMenuContentTranslateX || 0;
